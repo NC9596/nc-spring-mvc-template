@@ -82,7 +82,6 @@ spec:
           title: Database Password
           type: string
           description: Password of Database User, ex=Softtek@2022
-          ui:field: EntityNamePicker
         port_number:
           title: Port Number
           type: string
