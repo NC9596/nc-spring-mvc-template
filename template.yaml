@@ -1,0 +1,161 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: nc-spring-mvc-template
+  title: Spring MVC Service
+  description: Create a simple Spring MVC using Spring Boot Java
+  tags:
+    - java
+    - mvc
+    - springboot
+spec:
+  owner: Nandish
+  type: service
+
+  parameters:
+    - title: Provide these values to generate a Project
+      required:
+        - entity_name
+        - parameter1
+        - dataType_of_parameter1
+        - parameter2
+        - dataType_of_parameter2
+        - parameter2
+        - dataType_of_parameter2
+        - company_name
+        - db_schema_name
+        - db_userName
+        - db_password
+        - port_number
+      properties:
+        entity_name:
+          title: Entity Name
+          type: string
+          description: The entity that you want to store in the db [start with an upper case letter], ex= Employee
+          ui:field: EntityNamePicker
+        parameter1:
+          title: First Parameter
+          type: string
+          description: The features of the entity given [start with a lower case letter, then Camel case], ex= empName
+          ui:field: EntityNamePicker
+        dataType_of_parameter1:
+          title: Data Type, ex=String
+          type: string
+          description: Datatype of first Parameter [Please give the wrapper class name], ex=String
+          ui:field: EntityNamePicker
+        parameter2:
+          title: Second Parameter
+          type: string
+          description: The features of the entity given [start with a lower case letter, then Camel case], ex= empGender
+          ui:field: EntityNamePicker
+        dataType_of_parameter2:
+          title: Data Type, ex=String
+          type: string
+          description: Datatype of second Parameter [Please give the wrapper class name], ex=String
+          ui:field: EntityNamePicker
+        parameter3:
+          title: Third Parameter
+          type: string
+          description: The features of the entity given [start with a lower case letter, then Camel case], ex= empSalary
+          ui:: EntityNamePicker    
+        dataType_of_parameter3:
+          title: Data Type, ex=Integer
+          type: string
+          description: Datatype of third Parameter, ex=String
+          ui:field: EntityNamePicker
+        company_name:
+          title: Company Name
+          type: string
+          description: Name of the company [start with a lower case letter], ex=softtek
+          ui:field: EntityNamePicker
+        db_schema_name:
+          title: Database Schema Name
+          type: string
+          description: Name of the Database Schema, ex=backstage_db
+          ui:field: EntityNamePicker
+        db_userName:
+          title: Database User Name
+          type: string
+          description: Database user name, ex=root
+          ui:field: EntityNamePicker
+        db_password:
+          title: Database Password
+          type: string
+          description: Password of Database User, ex=Softtek@2022
+          ui:field: EntityNamePicker
+        port_number:
+          title: Port Number
+          type: string
+          description: Port number to be used, ex=4040
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this application is for.
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Configure Code Repository
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+
+  steps:
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        copyWithoutRender:
+          - .github/workflows/*
+        values:
+          entity_name: ${{ parameters.entity_name }}
+          description: ${{ parameters.description }}
+          owner: ${{ parameters.owner }}
+          parameter1: ${{ parameters.parameter1 }}
+          dataType_of_parameter1: ${{ parameters.dataType_of_parameter1 }}
+          parameter2: ${{ parameters.parameter2 }}
+          dataType_of_parameter2: ${{ parameters.dataType_of_parameter2 }}
+          parameter3: ${{ parameters.parameter3 }}
+          dataType_of_parameter3: ${{ parameters.dataType_of_parameter3 }}
+          company_name: ${{ parameters.company_name }}
+          db_schema_name: ${{ parameters.db_schema_name }}
+          db_userName: ${{ parameters.db_userName }}
+          db_password: ${{ parameters.db_password }}
+          port_number: ${{ parameters.port_number }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        allowedHosts: ["github.com"]
+        description: This is ${{ parameters.description }}
+        repoUrl: ${{ parameters.repoUrl }}
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
