@@ -12,7 +12,7 @@
 
 <h2>Welcome to ${{values.entity_name}} View Page</h2>
 
-<table border=2>
+<table border=>
 
 <tr>
 	<th>Id</th>

@@ -20,7 +20,7 @@
 
 	<c:if test="${!empty list}">
 
-		<table border=2>
+		<table border=>
 			<tr>
 				<th>Id</th>
 				<th>${{values.parameter1}}</th>

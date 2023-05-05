@@ -58,7 +58,7 @@ public class ${{values.entity_name}}Controller {
 	@GetMapping("/view")
 	public String getOne${{values.entity_name}}(@RequestParam int id, Model map) {
 		${{values.entity_name}} objectOf${{values.entity_name}}gt = service.getOne${{values.entity_name}}(id);
-		if (objectOfCustomergt != null) {
+		if (objectOf${{values.entity_name}}gt != null) {
 			map.addAttribute("objOf${{values.entity_name}}", objectOf${{values.entity_name}}gt);
 		} else {
 			map.addAttribute("msg", "No ${{values.entity_name}} Found");

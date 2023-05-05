@@ -47,7 +47,7 @@ public class ${{values.entity_name}} {
 		return ${{values.parameter1}};
 	}
 
-	public void setname(${{values.dataType_of_parameter1}} ${{values.parameter1}}) {
+	public void set${{values.parameter1}}(${{values.dataType_of_parameter1}} ${{values.parameter1}}) {
 		this.${{values.parameter1}} = ${{values.parameter1}};
 	}
 
@@ -55,7 +55,7 @@ public class ${{values.entity_name}} {
 		return ${{values.parameter2}};
 	}
 
-	public void setname(${{values.dataType_of_parameter2}} ${{values.parameter2}}) {
+	public void set${{values.parameter2}}(${{values.dataType_of_parameter2}} ${{values.parameter2}}) {
 		this.${{values.parameter2}} = ${{values.parameter2}};
 	}
 	
@@ -63,7 +63,7 @@ public class ${{values.entity_name}} {
 		return ${{values.parameter3}};
 	}
 
-	public void setname(${{values.dataType_of_parameter3}} ${{values.parameter3}}) {
+	public void set${{values.parameter3}}(${{values.dataType_of_parameter3}} ${{values.parameter3}}) {
 		this.${{values.parameter3}} = ${{values.parameter3}};
 	}
 
